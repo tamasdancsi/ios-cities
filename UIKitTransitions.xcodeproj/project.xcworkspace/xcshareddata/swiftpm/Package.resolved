@@ -1,0 +1,61 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "eaf6e622dd41b07b251d8f01752eab31bc811493",
+          "version": "5.4.1"
+        }
+      },
+      {
+        "package": "AlamofireImage",
+        "repositoryURL": "https://github.com/Alamofire/AlamofireImage.git",
+        "state": {
+          "branch": null,
+          "revision": "3e8edbeb75227f8542aa87f90240cf0424d6362f",
+          "version": "4.1.0"
+        }
+      },
+      {
+        "package": "ImageSlideshow",
+        "repositoryURL": "https://github.com/zvonicek/ImageSlideshow",
+        "state": {
+          "branch": null,
+          "revision": "a54e24d47944a1ca84c2a7bf03cb435425a9929d",
+          "version": "1.9.2"
+        }
+      },
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
+        "state": {
+          "branch": null,
+          "revision": "2a10bf41da75599a9f8e872dbd44fe0155a2e00c",
+          "version": "5.15.8"
+        }
+      },
+      {
+        "package": "OpenCombine",
+        "repositoryURL": "https://github.com/OpenCombine/OpenCombine",
+        "state": {
+          "branch": null,
+          "revision": "9bba5081344163296ddf537048566b95513b8f39",
+          "version": "0.11.0"
+        }
+      },
+      {
+        "package": "SDWebImage",
+        "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
+        "state": {
+          "branch": null,
+          "revision": "564d238f8814c4a82502336fd80b28a9d321ff47",
+          "version": "5.10.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

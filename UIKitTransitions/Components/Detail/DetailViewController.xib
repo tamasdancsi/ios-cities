@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="UIKitTransitions" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="psC-0d-fzC" id="gWL-C5-hWN"/>
+                <outlet property="cityView" destination="gcq-GG-GJW" id="rwp-Ex-P1L"/>
+                <outlet property="descriptionView" destination="aPd-Mr-xL3" id="tIn-8Q-qb5"/>
+                <outlet property="view" destination="iN0-l3-epB" id="kMe-TT-GuU"/>
+                <outlet property="visitButton" destination="vQS-KY-Mp1" id="sMf-4k-xAb"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQ6-pI-evo">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKE-r8-idx">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="916.5"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-GG-GJW" customClass="CityView" customModule="UIKitTransitions" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="457"/>
+                                    <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="hjB-9T-sPi"/>
+                                    </constraints>
+                                </view>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPd-Mr-xL3">
+                                    <rect key="frame" x="16" y="457" width="382" height="259.5"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor </mutableString>
+                                    <color key="textColor" systemColor="labelColor"/>
+                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psC-0d-fzC" customClass="ActionButton" customModule="UIKitTransitions" customModuleProvider="target">
+                                    <rect key="frame" x="20" y="816.5" width="374" height="50"/>
+                                    <color key="backgroundColor" systemColor="labelColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="GhG-Cn-Bqt"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                    <state key="normal" title="Back">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onBackButtonTap:" destination="-1" eventType="touchUpInside" id="AN3-Bn-6b7"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQS-KY-Mp1" customClass="ActionButton" customModule="UIKitTransitions" customModuleProvider="target">
+                                    <rect key="frame" x="20" y="746.5" width="374" height="50"/>
+                                    <color key="backgroundColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="MaM-Lz-GzC"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                    <state key="normal" title="Visit">
+                                        <color key="titleColor" systemColor="labelColor"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onVisitButtonTap:" destination="-1" eventType="touchUpInside" id="VXu-Y0-lgF"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="psC-0d-fzC" secondAttribute="bottom" constant="50" id="Ee1-bl-IaO"/>
+                                <constraint firstAttribute="trailing" secondItem="vQS-KY-Mp1" secondAttribute="trailing" constant="20" id="Eia-Ql-BA9"/>
+                                <constraint firstAttribute="trailing" secondItem="psC-0d-fzC" secondAttribute="trailing" constant="20" id="G2S-kf-6F4"/>
+                                <constraint firstItem="gcq-GG-GJW" firstAttribute="top" secondItem="zKE-r8-idx" secondAttribute="top" id="Gdv-f2-7Bi"/>
+                                <constraint firstItem="vQS-KY-Mp1" firstAttribute="leading" secondItem="zKE-r8-idx" secondAttribute="leading" constant="20" id="HzT-mQ-V80"/>
+                                <constraint firstItem="aPd-Mr-xL3" firstAttribute="leading" secondItem="zKE-r8-idx" secondAttribute="leading" constant="16" id="Ldb-RX-rYw"/>
+                                <constraint firstItem="aPd-Mr-xL3" firstAttribute="top" secondItem="gcq-GG-GJW" secondAttribute="bottom" id="N1b-i1-bnC"/>
+                                <constraint firstItem="psC-0d-fzC" firstAttribute="leading" secondItem="zKE-r8-idx" secondAttribute="leading" constant="20" id="fhf-WW-eQf"/>
+                                <constraint firstItem="psC-0d-fzC" firstAttribute="top" secondItem="vQS-KY-Mp1" secondAttribute="bottom" constant="20" id="pnr-39-SfG"/>
+                                <constraint firstItem="gcq-GG-GJW" firstAttribute="leading" secondItem="zKE-r8-idx" secondAttribute="leading" id="qBA-zi-bEC"/>
+                                <constraint firstAttribute="trailing" secondItem="gcq-GG-GJW" secondAttribute="trailing" id="vMB-Wl-BQO"/>
+                                <constraint firstAttribute="trailing" secondItem="aPd-Mr-xL3" secondAttribute="trailing" constant="16" id="wf4-UN-TDM"/>
+                                <constraint firstItem="vQS-KY-Mp1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="aPd-Mr-xL3" secondAttribute="bottom" constant="30" id="ybL-X9-im1"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="zKE-r8-idx" firstAttribute="leading" secondItem="VQ6-pI-evo" secondAttribute="leading" id="0Xl-xV-L0k"/>
+                        <constraint firstAttribute="trailing" secondItem="zKE-r8-idx" secondAttribute="trailing" id="QS0-ZB-4gl"/>
+                        <constraint firstItem="zKE-r8-idx" firstAttribute="height" relation="greaterThanOrEqual" secondItem="VQ6-pI-evo" secondAttribute="height" id="SWK-Kg-PkE"/>
+                        <constraint firstItem="zKE-r8-idx" firstAttribute="height" secondItem="VQ6-pI-evo" secondAttribute="height" priority="250" id="SpV-ih-Tpu"/>
+                        <constraint firstItem="zKE-r8-idx" firstAttribute="top" secondItem="VQ6-pI-evo" secondAttribute="top" id="Vxc-tx-5vK"/>
+                        <constraint firstItem="zKE-r8-idx" firstAttribute="width" secondItem="VQ6-pI-evo" secondAttribute="width" id="uo1-t4-QZv"/>
+                        <constraint firstAttribute="bottom" secondItem="zKE-r8-idx" secondAttribute="bottom" id="wa0-jq-aVn"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="VQ6-pI-evo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2e6-Yt-8Mk"/>
+                <constraint firstItem="VQ6-pI-evo" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="n4M-Vr-GJP"/>
+                <constraint firstItem="VQ6-pI-evo" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="tta-il-BME"/>
+                <constraint firstItem="VQ6-pI-evo" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="yFd-V3-rus"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="148.66071428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
