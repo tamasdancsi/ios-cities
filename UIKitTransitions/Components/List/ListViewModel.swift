@@ -7,7 +7,8 @@ import OpenCombine
 /// Skipping exposing only a protocol here since it's still too annoying to write protocols for Published values
 class ListViewModel: ObservableObject {
 
-    @Published var cities: [City] = []
+    @Published var featuredCities: [City] = []
+    @Published var otherCities: [City] = []
 
     var objectWillChange: ObservableObjectPublisher {
         ObservableObjectPublisher()
@@ -20,14 +21,16 @@ class ListViewModel: ObservableObject {
         self.cityInteractor = cityInteractor
     }
 
-    func updateIsFavorite(index: Int) {
-        cityInteractor.updateIsFavorite(city: cities[index])
+    func updateIsFavorite(city: City) {
+        cityInteractor.updateIsFavorite(city: city)
 
         /// Refetching the city list from the datasource after the change
         updateCities()
     }
 
     func updateCities() {
-        cities = cityInteractor.getCities()
+        let cities = cityInteractor.getCities()
+        featuredCities = cities.filter { $0.isFeatured }.sorted(by: { $0.name < $1.name })
+        otherCities = cities.filter { !$0.isFeatured }.sorted(by: { $0.name < $1.name })
     }
 }

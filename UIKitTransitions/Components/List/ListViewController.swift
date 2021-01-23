@@ -39,7 +39,15 @@ class ListViewController: UIViewController {
     }
 
     private func setupBindings() {
-        viewModel.$cities
+        /// In the future: use combine latest once it's supported by OpenCombine
+        /// https://github.com/OpenCombine/OpenCombine/blob/4977ca158f19738f0cd420a1e5668712f4e28709/RemainingCombineInterface.swift
+        viewModel.$featuredCities
+            .sink(receiveValue: { [weak self] _ in
+                self?.list.reloadData()
+            })
+            .store(in: &cancellables)
+
+        viewModel.$otherCities
             .sink(receiveValue: { [weak self] _ in
                 self?.list.reloadData()
             })
@@ -51,9 +59,10 @@ class ListViewController: UIViewController {
                       forCellReuseIdentifier: CityCell.cellIdentifier)
 
         list.rowHeight = UITableView.automaticDimension
-        list.estimatedRowHeight = 80
+        list.estimatedRowHeight = 196
         list.separatorStyle = .none
         list.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0);
+        list.sectionHeaderHeight = 60
     }
 }
 
@@ -61,25 +70,49 @@ class ListViewController: UIViewController {
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2 // 0: Featured, 1: Others
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.cities.count
+        if section == 0 {
+            return viewModel.featuredCities.count
+        } else if section == 1 {
+            return viewModel.otherCities.count
+        } else {
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.cellIdentifier, for: indexPath) as? CityCell,
-              viewModel.cities.count > indexPath.row else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.cellIdentifier, for: indexPath) as? CityCell else {
             return UITableViewCell()
         }
 
-        /// Displaying city view with preview mode and connecting favorite change event
-        cell.setup(city: viewModel.cities[indexPath.row]) { [weak self] in
-            self?.viewModel.updateIsFavorite(index: indexPath.row)
+        /// Displaying featured city view with preview mode and connecting favorite change event
+        if indexPath.section == 0 && viewModel.featuredCities.count > indexPath.row {
+            let city = viewModel.featuredCities[indexPath.row]
+            cell.setup(city: city) { [weak self] in
+                self?.viewModel.updateIsFavorite(city: city)
+            }
+            return cell
+
         }
-        return cell
+
+        /// Displaying rest city view with preview mode and connecting favorite change event
+        else if indexPath.section == 1 && viewModel.otherCities.count > indexPath.row {
+            let city = viewModel.otherCities[indexPath.row]
+            cell.setup(city: city) { [weak self] in
+                self?.viewModel.updateIsFavorite(city: city)
+            }
+            return cell
+        }
+
+        return UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard viewModel.cities.count > indexPath.row else {
+        guard let city = city(atIndexPath: indexPath) else {
             return
         }
 
@@ -87,10 +120,39 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         selectedCell = tableView.cellForRow(at: indexPath) as? CityCell
 
         /// Displaying detail screen
-        let vc = Assembler.shared.detailViewController(city: viewModel.cities[indexPath.row])
+        let vc = Assembler.shared.detailViewController(city: city)
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         present(vc, animated: true, completion: nil)
+    }
+
+    /// In the future: create a custom table header class for these
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel(frame: CGRect(x: 16, y: 0, width: tableView.frame.size.width - 32, height: list.sectionHeaderHeight))
+        label.text = section == 0 ? "Our picks" : "Other cities"
+        label.font = .preferredFont(forTextStyle: .headline)
+
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: list.sectionHeaderHeight))
+        view.backgroundColor = .white
+        view.addSubview(label)
+
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 2
+        view.layer.shadowOpacity = 0.1
+
+        return view
+    }
+
+    // MARK: - Helpers
+
+    private func city(atIndexPath indexPath: IndexPath) -> City? {
+        if indexPath.section == 0 && viewModel.featuredCities.count > indexPath.row {
+            return viewModel.featuredCities[indexPath.row]
+        } else if indexPath.section == 1 && viewModel.otherCities.count > indexPath.row {
+            return viewModel.otherCities[indexPath.row]
+        }
+        return nil
     }
 }
 
