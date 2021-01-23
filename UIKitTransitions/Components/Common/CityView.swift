@@ -12,7 +12,7 @@ typealias FavoriteChangedEvent = () -> Void
 class CityView: BaseInjectableViewImpl {
 
     enum Mode: Int {
-        case preview, slideshow
+        case cell, detail
     }
 
     @IBOutlet weak var viewedCountLabel: UILabel!
@@ -27,25 +27,40 @@ class CityView: BaseInjectableViewImpl {
     @IBOutlet weak var titleBottom: NSLayoutConstraint!
     @IBOutlet weak var starSize: NSLayoutConstraint!
 
-    private var mode: Mode = .preview
+    private var mode: Mode = .cell
     private var onFavoriteChanged: FavoriteChangedEvent!
 
     private let gradientMaskLayer = CAGradientLayer()
     private let cornerRadius: CGFloat = 15
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        applyCardStyle()
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
 
         gradientMaskLayer.frame = cityNameBackgroundView.bounds
 
-        if mode == .preview {
+        if mode == .cell {
             let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
             layer.shadowPath = shadowPath.cgPath
         }
     }
 
     @IBAction func onFavoriteButtonTap(_ sender: Any) {
-        onFavoriteChanged()
+        /// Stopping animations
+        favoriteButton.layer.removeAllAnimations()
+
+        let duration: TimeInterval = 0.6
+        favoriteButton.pulse(duration: duration)
+
+        /// Only calling event after animation is completed
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+            self?.onFavoriteChanged()
+        }
     }
 }
 
@@ -58,9 +73,9 @@ extension CityView {
         self.mode = mode
 
         switch mode {
-        case .preview:
+        case .cell:
             setupPreviewMode(city: city)
-        case .slideshow:
+        case .detail:
             setupSlideshowMode(city: city)
         }
 
@@ -102,19 +117,6 @@ extension CityView {
             previewPhoto?.image = UIImage(named: firstPhoto)
         }
 
-        /// Displaying shadow
-        layer.cornerRadius = cornerRadius
-        layer.masksToBounds = false
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowRadius = 5
-        layer.shadowOffset = .zero
-        layer.shadowOpacity = 0.2
-        layer.shouldRasterize = true
-
-        /// Cuts content corners
-        contentView?.layer.cornerRadius = cornerRadius
-        contentView?.layer.masksToBounds = true
-
         cityNameLabel.font = cityNameLabel.font.withSize(22)
         titleBottom.constant = 12
         starSize.constant = 30
@@ -140,7 +142,7 @@ extension CityView {
 
         updateFavoriteButtonUI(city: city)
 
-        if mode == .slideshow {
+        if mode == .detail {
             updateSlideshowMode(city: city)
         }
     }
@@ -158,5 +160,40 @@ extension CityView {
     private func updateFavoriteButtonUI(city: City) {
         favoriteButton.setImage(UIImage(named: "icon-star-filled")?.withRenderingMode(.alwaysTemplate), for: .normal)
         favoriteButton.tintColor = city.isFavorite ? .yellow : .white
+    }
+}
+
+// MARK: - Card style
+
+extension CityView {
+
+    private func applyCardStyle() {
+        /// Displaying shadow
+        layer.cornerRadius = cornerRadius
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowRadius = 5
+        layer.shadowOffset = .zero
+        layer.shadowOpacity = 0.2
+        layer.shouldRasterize = true
+
+        /// Cuts content corners
+        contentView?.layer.cornerRadius = cornerRadius
+        contentView?.layer.masksToBounds = true
+    }
+
+    func removeCardStyle() {
+        /// Displaying shadow
+        layer.cornerRadius = 0
+        layer.masksToBounds = true
+        layer.shadowColor = UIColor.clear.cgColor
+        layer.shadowRadius = 0
+        layer.shadowOffset = .zero
+        layer.shadowOpacity = 0
+        layer.shouldRasterize = true
+
+        /// Cuts content corners
+        contentView?.layer.cornerRadius = 0
+        contentView?.layer.masksToBounds = false
     }
 }

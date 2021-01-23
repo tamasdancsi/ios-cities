@@ -11,6 +11,9 @@ class ListViewController: UIViewController {
     @IBOutlet weak var list: UITableView!
 
     private let viewModel: ListViewModel
+    private let expandTransition = ExpandTransition()
+
+    private var selectedCell: CityCell?
     private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: ListViewModel) {
@@ -80,9 +83,33 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
 
+        /// Storing selected cell
+        selectedCell = tableView.cellForRow(at: indexPath) as? CityCell
+
         /// Displaying detail screen
         let vc = Assembler.shared.detailViewController(city: viewModel.cities[indexPath.row])
-        vc.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
         present(vc, animated: true, completion: nil)
+    }
+}
+
+// MARK: - Custom transition
+
+extension ListViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
+        expandTransition.mode = .present
+        expandTransition.selectedCell = selectedCell
+
+        return expandTransition
+    }
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
+        expandTransition.mode = .dismiss
+
+        return expandTransition
     }
 }

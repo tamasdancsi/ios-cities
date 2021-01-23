@@ -18,6 +18,6 @@ class CityCell: UITableViewCell {
     }
 
     func setup(city: City, onFavoriteChanged: @escaping FavoriteChangedEvent) {
-        cityView.setup(city: city, mode: .preview, onFavoriteChanged: onFavoriteChanged)
+        cityView.setup(city: city, mode: .cell, onFavoriteChanged: onFavoriteChanged)
     }
 }

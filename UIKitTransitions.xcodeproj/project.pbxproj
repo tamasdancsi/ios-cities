@@ -22,6 +22,8 @@
 		0C223E0F25BAD258008ACF9C /* CityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C223E0E25BAD258008ACF9C /* CityView.swift */; };
 		0C223E1225BAD267008ACF9C /* CityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C223E1125BAD267008ACF9C /* CityView.xib */; };
 		0C223E1525BAD54F008ACF9C /* BaseInjectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C223E1425BAD54F008ACF9C /* BaseInjectableView.swift */; };
+		0C4CB0F625BC5782005DDA7A /* ExpandTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4CB0F525BC5782005DDA7A /* ExpandTransition.swift */; };
+		0C4CB0F925BC88AB005DDA7A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4CB0F825BC88AB005DDA7A /* UIView+Extensions.swift */; };
 		0C5C700C25BB050C0077A33B /* ImageSlideshow in Frameworks */ = {isa = PBXBuildFile; productRef = 0C5C700B25BB050C0077A33B /* ImageSlideshow */; };
 		0C5C700F25BB0C540077A33B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C700E25BB0C540077A33B /* String+Extensions.swift */; };
 		0C5C701425BB31B20077A33B /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C701325BB31B20077A33B /* ActionButton.swift */; };
@@ -46,6 +48,8 @@
 		0C223E0E25BAD258008ACF9C /* CityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView.swift; sourceTree = "<group>"; };
 		0C223E1125BAD267008ACF9C /* CityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView.xib; sourceTree = "<group>"; };
 		0C223E1425BAD54F008ACF9C /* BaseInjectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInjectableView.swift; sourceTree = "<group>"; };
+		0C4CB0F525BC5782005DDA7A /* ExpandTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandTransition.swift; sourceTree = "<group>"; };
+		0C4CB0F825BC88AB005DDA7A /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		0C5C700E25BB0C540077A33B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		0C5C701325BB31B20077A33B /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		0CC6856C25BAB8BF0061C616 /* UIKitTransitions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIKitTransitions.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +125,7 @@
 			children = (
 				0C223DF925BAC583008ACF9C /* Assembler.swift */,
 				0C5C700E25BB0C540077A33B /* String+Extensions.swift */,
+				0C4CB0F825BC88AB005DDA7A /* UIView+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 		0CC6859125BAB9D30061C616 /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
+				0C4CB0F525BC5782005DDA7A /* ExpandTransition.swift */,
 			);
 			path = Transitions;
 			sourceTree = "<group>";
@@ -285,11 +291,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C4CB0F625BC5782005DDA7A /* ExpandTransition.swift in Sources */,
 				0C223E0325BAC76F008ACF9C /* ListViewModel.swift in Sources */,
 				0C223E0F25BAD258008ACF9C /* CityView.swift in Sources */,
 				0C223DFB25BAC583008ACF9C /* Assembler.swift in Sources */,
 				0CC6857425BAB8BF0061C616 /* ListViewController.swift in Sources */,
 				0C223E1525BAD54F008ACF9C /* BaseInjectableView.swift in Sources */,
+				0C4CB0F925BC88AB005DDA7A /* UIView+Extensions.swift in Sources */,
 				0C223E0925BAD211008ACF9C /* CityCell.swift in Sources */,
 				0C223DED25BAC361008ACF9C /* CityInteractor.swift in Sources */,
 				0CC6857025BAB8BF0061C616 /* AppDelegate.swift in Sources */,
