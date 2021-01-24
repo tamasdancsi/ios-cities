@@ -33,7 +33,8 @@ class ExpandTransition: NSObject, UIViewControllerAnimatedTransitioning {
     // MARK: - Expanding
 
     private func startExpandingTransition(context: UIViewControllerContextTransitioning) {
-        guard let toViewController = context.viewController(forKey: .to) as? DetailViewController,
+        guard let fromViewController = context.viewController(forKey: .from),
+              let toViewController = context.viewController(forKey: .to) as? DetailViewController,
               let fromView = selectedCell,
               let fromGlobalPoint = fromView.superview?.convert(fromView.frame.origin, to: nil) else {
             return
@@ -43,7 +44,7 @@ class ExpandTransition: NSObject, UIViewControllerAnimatedTransitioning {
         let containerView = context.containerView
         containerView.addSubview(toViewController.view)
 
-        let toFrame = toViewController.view.frame
+        let toFrame = fromViewController.view.frame
         var fromFrame = toFrame
         fromFrame.origin.y = fromGlobalPoint.y
         toViewController.view.frame = fromFrame

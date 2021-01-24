@@ -77,6 +77,7 @@ extension DetailViewController {
             self.cityViewTop.constant = 0
             self.cityViewRight.constant = 0
             self.cityViewLeft.constant = 0
+
             self.view.layoutIfNeeded()
         } completion: { finished in
             self.cityView.removeCardStyle()
