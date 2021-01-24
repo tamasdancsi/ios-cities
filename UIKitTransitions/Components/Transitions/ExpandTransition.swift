@@ -64,8 +64,11 @@ class ExpandTransition: NSObject, UIViewControllerAnimatedTransitioning {
             return
         }
 
+        var toFrame = fromViewController.view.frame
+        toFrame.origin.y = toFrame.height
+
         UIView.animate(withDuration: duration, animations: {
-            fromViewController.view.alpha = 0
+            fromViewController.view.frame = toFrame
         }, completion: { _ in
             context.completeTransition(true)
             fromViewController.view.removeFromSuperview()

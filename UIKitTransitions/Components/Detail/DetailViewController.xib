@@ -27,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQ6-pI-evo">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQ6-pI-evo">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKE-r8-idx">
@@ -91,7 +91,7 @@
                                 <constraint firstItem="gcq-GG-GJW" firstAttribute="leading" secondItem="zKE-r8-idx" secondAttribute="leading" constant="16" id="qBA-zi-bEC"/>
                                 <constraint firstAttribute="trailing" secondItem="gcq-GG-GJW" secondAttribute="trailing" constant="16" id="vMB-Wl-BQO"/>
                                 <constraint firstAttribute="trailing" secondItem="aPd-Mr-xL3" secondAttribute="trailing" constant="16" id="wf4-UN-TDM"/>
-                                <constraint firstItem="vQS-KY-Mp1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="aPd-Mr-xL3" secondAttribute="bottom" constant="30" id="ybL-X9-im1"/>
+                                <constraint firstItem="vQS-KY-Mp1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="aPd-Mr-xL3" secondAttribute="bottom" constant="20" id="ybL-X9-im1"/>
                             </constraints>
                         </view>
                     </subviews>
