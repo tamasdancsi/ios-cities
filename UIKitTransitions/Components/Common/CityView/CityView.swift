@@ -51,6 +51,10 @@ class CityView: BaseInjectableViewImpl {
         viewModel?.updateIsFavorite()
     }
 
+    func onViewedCityDetails() {
+        viewModel?.handleViewedCityDetails()
+    }
+
     private func updateCitySubscription() {
         /// Subscribing to city changes
         cancellable = viewModel?.$city
@@ -58,7 +62,7 @@ class CityView: BaseInjectableViewImpl {
                 guard let changed = changed else {
                     return
                 }
-                self?.updateFavoriteButtonUI(city: changed)
+                self?.updateCityUI(city: changed)
             }
     }
 }
@@ -83,8 +87,11 @@ extension CityView {
 
         setupFavoriteButtonUI()
         setupGradientMaskUI()
-        updateCityUI()
         updateCitySubscription()
+
+        if let city = viewModel.city {
+            updateCityUI(city: city)
+        }
     }
 
     private func setupGradientMaskUI() {
@@ -142,16 +149,20 @@ extension CityView {
 
 extension CityView {
 
-    func updateCityUI() {
-        guard let city = viewModel?.city else {
-            return
-        }
-
+    func updateCityUI(city: City) {
         viewedCountLabel.text = "\(city.viewedCount) "
         favoritedCountLabel.text = "\(city.favoritedCount)"
         cityNameLabel.text = city.name
-
         updateFavoriteButtonUI(city: city)
+
+        /// ViewModel's city state is still the old one
+        if viewModel?.city?.favoritedCount != city.favoritedCount {
+            favoritedCountLabel.fadeIn(duration: 0.3)
+        }
+
+        if viewModel?.city?.viewedCount != city.viewedCount {
+            viewedCountLabel.pulse(duration: 0.5)
+        }
 
         if viewModel?.mode == .detail {
             updateSlideshowMode()

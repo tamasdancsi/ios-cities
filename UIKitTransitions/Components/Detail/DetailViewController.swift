@@ -40,6 +40,8 @@ class DetailViewController: UIViewController {
         super.viewDidAppear(animated)
 
         startIntroAnimation()
+
+        cityView.onViewedCityDetails()
     }
 
     private func setupUI() {

@@ -48,6 +48,13 @@ class CityViewModel: OpenCombine.ObservableObject {
         cityInteractor.updateIsFavorite(city: city)
     }
 
+    func handleViewedCityDetails() {
+        guard let city = city else {
+            return
+        }
+        cityInteractor.increaseViewCount(city: city)
+    }
+
     private func handleCityChange(changed: City) {
         guard city?.name == changed.name else {
             return

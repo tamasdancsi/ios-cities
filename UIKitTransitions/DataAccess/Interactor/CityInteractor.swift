@@ -11,6 +11,7 @@ protocol CityInteractor {
     func getCities() -> [City]
     func getCity(name: String) -> City?
     func updateIsFavorite(city: City)
+    func increaseViewCount(city: City)
 }
 
 struct CityInteractorImpl: CityInteractor {
@@ -35,5 +36,9 @@ struct CityInteractorImpl: CityInteractor {
 
     func updateIsFavorite(city: City) {
         cityRepository.updateIsFavorite(city: city)
+    }
+
+    func increaseViewCount(city: City) {
+        cityRepository.increaseViewCount(city: city)
     }
 }

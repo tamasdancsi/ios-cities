@@ -29,4 +29,14 @@ extension UIView {
         layer.add(scaleAnimationX, forKey: "transform.scale.x")
         layer.add(scaleAnimationY, forKey: "transform.scale.y")
     }
+
+    func fadeIn(duration: TimeInterval) {
+        let opacityAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+        opacityAnimation.duration = duration
+        opacityAnimation.fromValue = 0.6
+        opacityAnimation.toValue = 1
+        opacityAnimation.timingFunction = CAMediaTimingFunction(name: .easeIn)
+
+        layer.add(opacityAnimation, forKey: "animateOpacity")
+    }
 }

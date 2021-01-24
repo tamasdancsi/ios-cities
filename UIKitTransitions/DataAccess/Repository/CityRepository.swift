@@ -11,6 +11,7 @@ protocol CityRepository {
     func getCities() -> [City]
     func getCity(name: String) -> City?
     func updateIsFavorite(city: City)
+    func increaseViewCount(city: City)
 }
 
 class CityRepositoryImpl: CityRepository {
@@ -39,7 +40,24 @@ class CityRepositoryImpl: CityRepository {
             return
         }
 
+        /// Toggling favorited state
         cities[index].isFavorite.toggle()
+        if cities[index].isFavorite {
+            cities[index].favoritedCount += 1
+        } else {
+            cities[index].favoritedCount -= 1
+        }
+
+        /// Notify listeners that the data source changed
+        cityChanged.send(cities[index])
+    }
+
+    func increaseViewCount(city: City) {
+        guard let index = cities.firstIndex(where: { $0.name == city.name }) else {
+            return
+        }
+
+        cities[index].viewedCount += 1
 
         /// Notify listeners that the data source changed
         cityChanged.send(cities[index])
