@@ -24,6 +24,7 @@ class CityView: BaseInjectableViewImpl {
 
     private let gradientMaskLayer = CAGradientLayer()
     private let cornerRadius: CGFloat = 15
+    private let introAnimationDuration: TimeInterval = 2
 
     private var viewModel: CityViewModel?
     private var cancellable: AnyCancellable?
@@ -104,9 +105,6 @@ extension CityView {
     }
 
     private func setupDetailMode() {
-        /// Preview is not needed in slideshow mode
-        previewPhoto?.removeFromSuperview()
-
         imageSlideshow?.backgroundColor = .clear
         imageSlideshow?.slideshowInterval = Double.random(in: 2...4)
         imageSlideshow?.contentScaleMode = .scaleAspectFill
@@ -119,17 +117,20 @@ extension CityView {
         updateSlideshowMode()
     }
 
-    private func setupCellMode() {
-        guard let city = viewModel?.city else {
-            return
+    func startIntroAnimation(delay: TimeInterval) {
+        UIView.animate(withDuration: introAnimationDuration, delay: delay) {
+            self.previewPhoto?.alpha = 0
+        } completion: { finished in
+            if finished {
+                /// Preview is not needed in slideshow mode
+                self.previewPhoto?.removeFromSuperview()
+            }
         }
+    }
 
+    private func setupCellMode() {
         /// Slideshow is not needed in preview mode
         imageSlideshow?.removeFromSuperview()
-
-        if let firstPhoto = city.photos.first {
-            previewPhoto?.image = UIImage(named: firstPhoto)
-        }
 
         cityNameLabel.font = cityNameLabel.font.withSize(24)
         titleBottom.constant = 12
@@ -167,6 +168,10 @@ extension CityView {
         if viewModel?.mode == .detail {
             updateSlideshowMode()
         }
+
+        if let firstPhoto = city.photos.first {
+            previewPhoto?.image = UIImage(named: firstPhoto)
+        }
     }
 
     private func updateSlideshowMode() {
@@ -201,7 +206,9 @@ extension CityView {
         layer.shadowRadius = 5
         layer.shadowOffset = .zero
         layer.shadowOpacity = 0.2
-//        layer.shouldRasterize = true
+
+        // TODO: add separate layer for shadow and rasterize it
+        // shadow.layer.shouldRasterize = true
 
         /// Cuts content corners
         contentView?.layer.cornerRadius = cornerRadius
@@ -216,7 +223,6 @@ extension CityView {
         layer.shadowRadius = 0
         layer.shadowOffset = .zero
         layer.shadowOpacity = 0
-//        layer.shouldRasterize = true
 
         /// Cuts content corners
         contentView?.layer.cornerRadius = 0

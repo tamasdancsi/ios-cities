@@ -14,7 +14,7 @@ class ExpandTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
     weak var selectedCell: CityCell?
 
-    private let duration: TimeInterval = 0.15
+    private let duration: TimeInterval = 0.2
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         duration

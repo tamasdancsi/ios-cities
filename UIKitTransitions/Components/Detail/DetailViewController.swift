@@ -18,7 +18,7 @@ class DetailViewController: UIViewController {
 
     private let viewModel: DetailViewModel
 
-    private let cityViewAnimationDuration: TimeInterval = 0.05
+    private let cityViewAnimationDuration: TimeInterval = 0.2
     private let fadeInAnimationDuration: TimeInterval = 0.5
 
     init(viewModel: DetailViewModel) {
@@ -93,5 +93,7 @@ extension DetailViewController {
                 self.scrollView.setContentOffset(CGPoint(x: 0, y: -self.scrollView.contentInset.top), animated: true)
             }
         }
+
+        cityView.startIntroAnimation(delay: cityViewAnimationDuration)
     }
 }
