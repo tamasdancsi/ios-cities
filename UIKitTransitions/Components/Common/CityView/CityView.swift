@@ -132,7 +132,7 @@ extension CityView {
         /// Slideshow is not needed in preview mode
         imageSlideshow?.removeFromSuperview()
 
-        cityNameLabel.font = cityNameLabel.font.withSize(24)
+        cityNameLabel.font = cityNameLabel.font.withSize(20)
         titleBottom.constant = 12
         starSize.constant = 30
         updateConstraintsIfNeeded()
