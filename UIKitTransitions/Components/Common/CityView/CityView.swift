@@ -201,7 +201,7 @@ extension CityView {
         layer.shadowRadius = 5
         layer.shadowOffset = .zero
         layer.shadowOpacity = 0.2
-        layer.shouldRasterize = true
+//        layer.shouldRasterize = true
 
         /// Cuts content corners
         contentView?.layer.cornerRadius = cornerRadius
@@ -216,7 +216,7 @@ extension CityView {
         layer.shadowRadius = 0
         layer.shadowOffset = .zero
         layer.shadowOpacity = 0
-        layer.shouldRasterize = true
+//        layer.shouldRasterize = true
 
         /// Cuts content corners
         contentView?.layer.cornerRadius = 0
