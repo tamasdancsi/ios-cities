@@ -15,20 +15,15 @@ class ListViewModel: ObservableObject {
     }
 
     private let cityInteractor: CityInteractor
-    private var cancellables: Set<AnyCancellable> = []
 
     init(cityInteractor: CityInteractor) {
         self.cityInteractor = cityInteractor
+
+        /// Loading cities also for the first time
+        fetchCities()
     }
 
-    func updateIsFavorite(city: City) {
-        cityInteractor.updateIsFavorite(city: city)
-
-        /// Refetching the city list from the datasource after the change
-        updateCities()
-    }
-
-    func updateCities() {
+    private func fetchCities() {
         let cities = cityInteractor.getCities()
         featuredCities = cities.filter { $0.isFeatured }.sorted(by: { $0.name < $1.name })
         otherCities = cities.filter { !$0.isFeatured }.sorted(by: { $0.name < $1.name })

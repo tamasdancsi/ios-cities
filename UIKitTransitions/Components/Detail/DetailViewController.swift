@@ -3,7 +3,6 @@
 //
 
 import UIKit
-import OpenCombine
 
 class DetailViewController: UIViewController {
 
@@ -18,7 +17,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var cityViewLeft: NSLayoutConstraint!
 
     private let viewModel: DetailViewModel
-    private var cancellables: Set<AnyCancellable> = []
 
     private let cityViewAnimationDuration: TimeInterval = 0.05
     private let fadeInAnimationDuration: TimeInterval = 0.5
@@ -36,7 +34,6 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
 
         setupUI()
-        setupBindings()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -45,19 +42,9 @@ class DetailViewController: UIViewController {
         startIntroAnimation()
     }
 
-    private func setupBindings() {
-        viewModel.$city
-            .sink(receiveValue: { [weak self] city in
-                self?.cityView.updateCityUI(city: city)
-            })
-            .store(in: &cancellables)
-    }
-
     private func setupUI() {
         /// Displaying city view with slideshow mode and connecting favorite change event
-        cityView.setup(city: viewModel.city, mode: .detail) { [weak self] in
-            self?.viewModel.updateIsFavorite()
-        }
+        cityView.setup(cityName: viewModel.city.name, mode: .detail)
 
         descriptionView.text = viewModel.city.description
         visitButton.setTitle("Visit", for: .normal)

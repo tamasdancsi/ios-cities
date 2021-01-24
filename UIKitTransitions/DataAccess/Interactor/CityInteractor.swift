@@ -6,6 +6,8 @@ import OpenCombine
 
 protocol CityInteractor {
 
+    var cityChanged: PassthroughSubject<City, Never> { get }
+
     func getCities() -> [City]
     func getCity(name: String) -> City?
     func updateIsFavorite(city: City)
@@ -14,6 +16,10 @@ protocol CityInteractor {
 struct CityInteractorImpl: CityInteractor {
 
     private let cityRepository: CityRepository
+
+    var cityChanged: PassthroughSubject<City, Never> {
+        cityRepository.cityChanged
+    }
 
     init(cityRepository: CityRepository) {
         self.cityRepository = cityRepository

@@ -18,7 +18,11 @@ class Assembler {
     }
 
     func detailViewModel(city: City) -> DetailViewModel {
-        DetailViewModel(cityInteractor: cityInteractor, city: city)
+        DetailViewModelImpl(city: city)
+    }
+
+    func cityViewModel(cityName: String, mode: CityViewModel.Mode) -> CityViewModel {
+        CityViewModel(cityInteractor: cityInteractor, cityName: cityName, mode: mode)
     }
 
     var listViewModel: ListViewModel {

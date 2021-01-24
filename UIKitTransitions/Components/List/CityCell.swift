@@ -17,7 +17,7 @@ class CityCell: UITableViewCell {
         selectionStyle = .none
     }
 
-    func setup(city: City, onFavoriteChanged: @escaping FavoriteChangedEvent) {
-        cityView.setup(city: city, mode: .cell, onFavoriteChanged: onFavoriteChanged)
+    func setup(cityName: String, mode: CityViewModel.Mode) {
+        cityView.setup(cityName: cityName, mode: mode)
     }
 }

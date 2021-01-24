@@ -6,6 +6,8 @@ import OpenCombine
 
 protocol CityRepository {
 
+    var cityChanged: PassthroughSubject<City, Never> { get }
+
     func getCities() -> [City]
     func getCity(name: String) -> City?
     func updateIsFavorite(city: City)
@@ -17,6 +19,8 @@ class CityRepositoryImpl: CityRepository {
     static let shared = CityRepositoryImpl()
 
     var cities: [City] = []
+
+    var cityChanged = PassthroughSubject<City, Never>()
 
     init() {
         cities = defaultCities
@@ -31,9 +35,14 @@ class CityRepositoryImpl: CityRepository {
     }
 
     func updateIsFavorite(city: City) {
-        if let index = cities.firstIndex(where: { $0.name == city.name }) {
-            cities[index].isFavorite.toggle()
+        guard let index = cities.firstIndex(where: { $0.name == city.name }) else {
+            return
         }
+
+        cities[index].isFavorite.toggle()
+
+        /// Notify listeners that the data source changed
+        cityChanged.send(cities[index])
     }
 
     // MARK: - Test data

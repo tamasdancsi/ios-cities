@@ -4,16 +4,11 @@
 
 import UIKit
 import ImageSlideshow
-
-typealias FavoriteChangedEvent = () -> Void
+import OpenCombine
 
 /// This is a reused view that gets displayed in both the city list cells and on the detail view
 /// It would be nicer to split it in the future. For now either a slideshow or a preview photo is presented
 class CityView: BaseInjectableViewImpl {
-
-    enum Mode: Int {
-        case cell, detail
-    }
 
     @IBOutlet weak var viewedCountLabel: UILabel!
     @IBOutlet weak var favoritedCountLabel: UILabel!
@@ -27,11 +22,11 @@ class CityView: BaseInjectableViewImpl {
     @IBOutlet weak var titleBottom: NSLayoutConstraint!
     @IBOutlet weak var starSize: NSLayoutConstraint!
 
-    private var mode: Mode = .cell
-    private var onFavoriteChanged: FavoriteChangedEvent!
-
     private let gradientMaskLayer = CAGradientLayer()
     private let cornerRadius: CGFloat = 15
+
+    private var viewModel: CityViewModel?
+    private var cancellable: AnyCancellable?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,23 +39,27 @@ class CityView: BaseInjectableViewImpl {
 
         gradientMaskLayer.frame = cityNameBackgroundView.bounds
 
-        if mode == .cell {
+        if viewModel?.mode == .cell {
             let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
             layer.shadowPath = shadowPath.cgPath
         }
     }
 
     @IBAction func onFavoriteButtonTap(_ sender: Any) {
-        /// Stopping animations
         favoriteButton.layer.removeAllAnimations()
+        favoriteButton.pulse(duration: 0.6)
+        viewModel?.updateIsFavorite()
+    }
 
-        let duration: TimeInterval = 0.6
-        favoriteButton.pulse(duration: duration)
-
-        /// Only calling event after animation is completed
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
-            self?.onFavoriteChanged()
-        }
+    private func updateCitySubscription() {
+        /// Subscribing to city changes
+        cancellable = viewModel?.$city
+            .sink { [weak self] changed in
+                guard let changed = changed else {
+                    return
+                }
+                self?.updateFavoriteButtonUI(city: changed)
+            }
     }
 }
 
@@ -68,20 +67,24 @@ class CityView: BaseInjectableViewImpl {
 
 extension CityView {
 
-    func setup(city: City, mode: Mode, onFavoriteChanged: @escaping FavoriteChangedEvent) {
-        self.onFavoriteChanged = onFavoriteChanged
-        self.mode = mode
+    func setup(cityName: String, mode: CityViewModel.Mode) {
+        /// In the future: This could be passed from the outside
+        self.viewModel = Assembler.shared.cityViewModel(cityName: cityName, mode: mode)
+        guard let viewModel = viewModel else {
+            return
+        }
 
-        switch mode {
+        switch viewModel.mode {
         case .cell:
-            setupPreviewMode(city: city)
+            setupCellMode()
         case .detail:
-            setupSlideshowMode(city: city)
+            setupDetailMode()
         }
 
         setupFavoriteButtonUI()
         setupGradientMaskUI()
-        updateCityUI(city: city)
+        updateCityUI()
+        updateCitySubscription()
     }
 
     private func setupGradientMaskUI() {
@@ -93,7 +96,7 @@ extension CityView {
         cityNameBackgroundView.backgroundColor = .black
     }
 
-    private func setupSlideshowMode(city: City) {
+    private func setupDetailMode() {
         /// Preview is not needed in slideshow mode
         previewPhoto?.removeFromSuperview()
 
@@ -106,10 +109,14 @@ extension CityView {
         starSize.constant = 44
         updateConstraintsIfNeeded()
 
-        updateSlideshowMode(city: city)
+        updateSlideshowMode()
     }
 
-    private func setupPreviewMode(city: City) {
+    private func setupCellMode() {
+        guard let city = viewModel?.city else {
+            return
+        }
+
         /// Slideshow is not needed in preview mode
         imageSlideshow?.removeFromSuperview()
 
@@ -117,7 +124,7 @@ extension CityView {
             previewPhoto?.image = UIImage(named: firstPhoto)
         }
 
-        cityNameLabel.font = cityNameLabel.font.withSize(22)
+        cityNameLabel.font = cityNameLabel.font.withSize(24)
         titleBottom.constant = 12
         starSize.constant = 30
         updateConstraintsIfNeeded()
@@ -135,19 +142,27 @@ extension CityView {
 
 extension CityView {
 
-    func updateCityUI(city: City) {
+    func updateCityUI() {
+        guard let city = viewModel?.city else {
+            return
+        }
+
         viewedCountLabel.text = "\(city.viewedCount) "
         favoritedCountLabel.text = "\(city.favoritedCount)"
         cityNameLabel.text = city.name
 
         updateFavoriteButtonUI(city: city)
 
-        if mode == .detail {
-            updateSlideshowMode(city: city)
+        if viewModel?.mode == .detail {
+            updateSlideshowMode()
         }
     }
 
-    private func updateSlideshowMode(city: City) {
+    private func updateSlideshowMode() {
+        guard let city = viewModel?.city else {
+            return
+        }
+
         let inputs: [ImageSource] = city.photos.compactMap {
             guard let image = UIImage(named: $0) else {
                 return nil

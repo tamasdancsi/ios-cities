@@ -32,6 +32,7 @@
 		0CC6857925BAB8C00061C616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CC6857825BAB8C00061C616 /* Assets.xcassets */; };
 		0CC6857C25BAB8C00061C616 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CC6857A25BAB8C00061C616 /* LaunchScreen.storyboard */; };
 		0CC6858825BAB90E0061C616 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC6858725BAB90E0061C616 /* DetailViewController.swift */; };
+		0CF1046225BD4E95005969B7 /* CityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1046125BD4E95005969B7 /* CityViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		0CC6857B25BAB8C00061C616 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0CC6857D25BAB8C00061C616 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CC6858725BAB90E0061C616 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0CF1046125BD4E95005969B7 /* CityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +137,7 @@
 			children = (
 				0C5C701325BB31B20077A33B /* ActionButton.swift */,
 				0C223E1425BAD54F008ACF9C /* BaseInjectableView.swift */,
-				0C223E0E25BAD258008ACF9C /* CityView.swift */,
-				0C223E1125BAD267008ACF9C /* CityView.xib */,
+				0CF1046025BD4E81005969B7 /* CityView */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -207,6 +208,16 @@
 				0C4CB0F525BC5782005DDA7A /* ExpandTransition.swift */,
 			);
 			path = Transitions;
+			sourceTree = "<group>";
+		};
+		0CF1046025BD4E81005969B7 /* CityView */ = {
+			isa = PBXGroup;
+			children = (
+				0C223E0E25BAD258008ACF9C /* CityView.swift */,
+				0C223E1125BAD267008ACF9C /* CityView.xib */,
+				0CF1046125BD4E95005969B7 /* CityViewModel.swift */,
+			);
+			path = CityView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CF1046225BD4E95005969B7 /* CityViewModel.swift in Sources */,
 				0C4CB0F625BC5782005DDA7A /* ExpandTransition.swift in Sources */,
 				0C223E0325BAC76F008ACF9C /* ListViewModel.swift in Sources */,
 				0C223E0F25BAD258008ACF9C /* CityView.swift in Sources */,

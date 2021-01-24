@@ -32,12 +32,6 @@ class ListViewController: UIViewController {
         setupBindings()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        viewModel.updateCities()
-    }
-
     private func setupBindings() {
         /// In the future: use combine latest once it's supported by OpenCombine
         /// https://github.com/OpenCombine/OpenCombine/blob/4977ca158f19738f0cd420a1e5668712f4e28709/RemainingCombineInterface.swift
@@ -92,9 +86,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         /// Displaying featured city view with preview mode and connecting favorite change event
         if indexPath.section == 0 && viewModel.featuredCities.count > indexPath.row {
             let city = viewModel.featuredCities[indexPath.row]
-            cell.setup(city: city) { [weak self] in
-                self?.viewModel.updateIsFavorite(city: city)
-            }
+            cell.setup(cityName: city.name, mode: .cell)
             return cell
 
         }
@@ -102,9 +94,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         /// Displaying rest city view with preview mode and connecting favorite change event
         else if indexPath.section == 1 && viewModel.otherCities.count > indexPath.row {
             let city = viewModel.otherCities[indexPath.row]
-            cell.setup(city: city) { [weak self] in
-                self?.viewModel.updateIsFavorite(city: city)
-            }
+            cell.setup(cityName: city.name, mode: .cell)
             return cell
         }
 
